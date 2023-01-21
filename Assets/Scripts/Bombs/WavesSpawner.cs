@@ -34,6 +34,14 @@ public class WavesSpawner : MonoBehaviour
             _isActivated = false;
         }
     }
+    private void Update()
+    {
+        if (_player.isAlive == false) Destroy(gameObject);
+
+        if (_isActivated) return;
+
+        ChangeWavesState();
+    }
 
     IEnumerator SetIntervalBetweenActivate()
     {
@@ -56,15 +64,6 @@ public class WavesSpawner : MonoBehaviour
 
             StartCoroutine(SetIntervalBetweenActivate());
         }
-    }
-
-    private void Update()
-    {
-        if (_player.isAlive == false) Destroy(gameObject);
-
-        if (_isActivated) return;
-
-        ChangeWavesState();
     }
 
     private void SpawnBomb(_positionsVariants position, GameObject wave)

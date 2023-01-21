@@ -6,10 +6,15 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerLifes _playerLifes;
 
+    private Camera _camera;
+    private Animator _animator;
+
     public bool isAlive = true;
     public bool isImmortal = false;
 
-    private Animator _animator;
+    private float _shakeRangeWithMove = 0.05f;
+    private float _shakeRangeWithDamage = 0.3f;
+
     private enum _positionsVariants
     {
         top, middle, bottom
@@ -20,11 +25,12 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _animator = gameObject.GetComponentInParent<Animator>();
+        _camera = FindObjectOfType<Camera>();
     }
 
     private void Update()
     {
-        MovePLayer();
+        if (isAlive) MovePLayer();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +41,26 @@ public class PlayerController : MonoBehaviour
             TakeDamage();
         }
     }
+    IEnumerator ShakeCamre(float shakeRange, float myDurantion = 0.5f)
+    {
+        float xPos;
+        float yPos;
 
+        float timeLeft = Time.time;
+        float duration = myDurantion;
+
+        Vector3 originalPosition = _camera.transform.position;
+
+        while ((timeLeft + duration) > Time.time)
+        {
+            xPos = Random.Range(-shakeRange, shakeRange);
+            yPos = Random.Range(-shakeRange, shakeRange);
+
+            _camera.transform.position = new Vector3(xPos, yPos, _camera.transform.position.z); yield return new WaitForSeconds(0.025f);
+        }
+
+        _camera.transform.position = originalPosition;
+    }
     private void TakeDamage()
     {
         if (!isAlive) return;
@@ -45,7 +70,9 @@ public class PlayerController : MonoBehaviour
 
         isImmortal = true;
         _animator.SetBool("isImmortal", true);
-        
+
+        StartCoroutine(ShakeCamre(_shakeRangeWithDamage));
+
         StartCoroutine(SetImmortalTime());
 
         if (_playerLifes.playerLifesCount == 0)
@@ -84,7 +111,7 @@ public class PlayerController : MonoBehaviour
                 transform.position = new Vector2(transform.position.x, 0);
                 PlayerPosition = _positionsVariants.middle;
             }
-
+            StartCoroutine(ShakeCamre(_shakeRangeWithMove, 0.15f));
             return;
         }
         if (Input.GetKeyDown(KeyCode.S))
@@ -100,7 +127,7 @@ public class PlayerController : MonoBehaviour
                 transform.position = new Vector2(transform.position.x, 0);
                 PlayerPosition = _positionsVariants.middle;
             }
-
+            StartCoroutine(ShakeCamre(_shakeRangeWithMove, 0.15f));
             return;
         }
     }

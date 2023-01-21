@@ -11,7 +11,7 @@ public class PlayerLifes : MonoBehaviour
 
     private void Start()
     {
-        playerLifesCount = 50;
+        playerLifesCount = 3;
         _myLifes = gameObject.GetComponent<Text>();
         _myLifes.text = $"{playerLifesCount}";
     }
