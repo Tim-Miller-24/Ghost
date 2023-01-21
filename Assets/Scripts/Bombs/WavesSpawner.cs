@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WavesSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _bombWave;
+    [SerializeField] private GameObject _wavePrefab;
     [SerializeField] private GameObject _bombPrefab;
     [SerializeField] private PlayerController _player;
 
@@ -19,7 +19,7 @@ public class WavesSpawner : MonoBehaviour
 
     private readonly float _xPosition = 15f;
     private Vector2 _position;
-    private bool _isSpawned;
+    private bool _isActivated;
 
     private void Start()
     {
@@ -27,34 +27,34 @@ public class WavesSpawner : MonoBehaviour
         GameObject oneWave;
         for (int i = 0; i < _amountToPool; i++)
         {
-            oneWave = Instantiate(_bombWave, new Vector2(0, 0), Quaternion.identity, transform);
+            oneWave = Instantiate(_wavePrefab, new Vector2(0, 0), Quaternion.identity, transform);
             SetPositionAndSpawnWave(oneWave);
             oneWave.SetActive(false);
             bobmWavesInPool.Add(oneWave);
-            _isSpawned = true;
+            _isActivated = false;
         }
     }
 
-    IEnumerator SetIntervalBetweenSpawn()
+    IEnumerator SetIntervalBetweenActivate()
     {
         yield return new WaitForSeconds(0.8f);
 
-        _isSpawned = false;
+        _isActivated = false;
     }
 
-    private void FixedUpdate()
+    private void ChangeWavesState()
     {
+        int rnd = Random.Range(0, _amountToPool);
 
-    }
+        GameObject temp = bobmWavesInPool[rnd];
 
-    public void GetPooledWaves()
-    {
-        for (int i = 0; i < _amountToPool; i++)
+        if (!temp.activeInHierarchy)
         {
-            if (!bobmWavesInPool[i].activeInHierarchy)
-            {
-                
-            }
+            temp.SetActive(true);
+
+            _isActivated = true;
+
+            StartCoroutine(SetIntervalBetweenActivate());
         }
     }
 
@@ -62,29 +62,10 @@ public class WavesSpawner : MonoBehaviour
     {
         if (_player.isAlive == false) Destroy(gameObject);
 
-        
+        if (_isActivated) return;
 
-        //GameObject bombWaves = GetPooledWaves();
-        //if (bombWaves != null)
-        //{
-        //    bombWaves.transform.position = Vector2.zero;
-        //    bombWaves.SetActive(true);
-
-        //    Debug.Log(bombWaves);
-        //}
+        ChangeWavesState();
     }
-
-    //public GameObject GetPooledWaves()
-    //{
-    //    for (int i = 0; i < _amountToPool; i++)
-    //    {
-    //        if (!bobmWavesInPool[i].activeInHierarchy)
-    //        {
-    //            return bobmWavesInPool[i];
-    //        }
-    //    }
-    //    return null;
-    //}
 
     private void SpawnBomb(_positionsVariants position, GameObject wave)
     {
@@ -106,7 +87,7 @@ public class WavesSpawner : MonoBehaviour
 
     private void SetPositionAndSpawnWave(GameObject wave)
     {
-        int rnd = UnityEngine.Random.Range(0, 3);
+        int rnd = Random.Range(0, 3);
 
         switch (rnd)
         {

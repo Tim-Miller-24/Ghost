@@ -6,14 +6,12 @@ public class BombWavesScript : MonoBehaviour
 {
     private float _speed = 10f;
 
-    private float _startPositionX;
-
-    private void Start()
+    private void Update()
     {
-        _startPositionX = transform.position.x;
+        if (gameObject.activeInHierarchy) MoveWave();
     }
 
-    public void MoveWave()
+    private void MoveWave()
     {
         transform.position = new Vector2(transform.position.x - _speed * Time.deltaTime, transform.position.y);
         StartCoroutine(DisableBomb());
@@ -21,8 +19,9 @@ public class BombWavesScript : MonoBehaviour
 
     private IEnumerator DisableBomb()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
         gameObject.SetActive(false);
+        transform.position = Vector2.zero;
     }
 }
