@@ -26,7 +26,7 @@ public class PlayerScore : MonoBehaviour
         UpdatePlayerScore();
     }
 
-    IEnumerator WaitBeforeAddingScore()
+    private IEnumerator WaitBeforeAddingScore()
     {
         yield return new WaitForSeconds(0.8f);
 
