@@ -9,18 +9,18 @@ public class PlayerController : MonoBehaviour
     private Camera _camera;
     private Animator _animator;
 
-    public bool isAlive = true;
-    public bool isImmortal = false;
-
     private float _shakeRangeWithMove = 0.05f;
     private float _shakeRangeWithDamage = 0.3f;
 
-    private enum _positionsVariants
+    public bool isAlive = true;
+    public bool isImmortal = false;
+
+    private enum PositionsVariants
     {
         top, middle, bottom
     }
 
-    _positionsVariants PlayerPosition = _positionsVariants.middle;
+    private PositionsVariants PlayerPosition = PositionsVariants.middle;
 
     private void Start()
     {
@@ -35,13 +35,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.TryGetComponent(out BombScript bomb))
+        if (collision.tag is "Bomb")
         {
             if (isImmortal) return;
             TakeDamage();
         }
     }
-    IEnumerator ShakeCamre(float shakeRange, float myDurantion = 0.5f)
+    IEnumerator ShakeCamera(float shakeRange, float myDurantion = 0.5f)
     {
         float xPos;
         float yPos;
@@ -56,7 +56,8 @@ public class PlayerController : MonoBehaviour
             xPos = Random.Range(-shakeRange, shakeRange);
             yPos = Random.Range(-shakeRange, shakeRange);
 
-            _camera.transform.position = new Vector3(xPos, yPos, _camera.transform.position.z); yield return new WaitForSeconds(0.025f);
+            _camera.transform.position = new Vector3(xPos, yPos, _camera.transform.position.z);
+            yield return null;
         }
 
         _camera.transform.position = originalPosition;
@@ -65,13 +66,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAlive) return;
 
-        _playerLifes.playerLifesCount--;
+        _playerLifes.IncreaseHealth(1);
         _playerLifes.UpdateLifesCount();
 
         isImmortal = true;
         _animator.SetBool("isImmortal", true);
 
-        StartCoroutine(ShakeCamre(_shakeRangeWithDamage));
+        StartCoroutine(ShakeCamera(_shakeRangeWithDamage));
 
         StartCoroutine(SetImmortalTime());
 
@@ -101,33 +102,33 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (PlayerPosition == _positionsVariants.middle)
+            if (PlayerPosition == PositionsVariants.middle)
             {
                 transform.position = new Vector2(transform.position.x, 3f);
-                PlayerPosition = _positionsVariants.top;
+                PlayerPosition = PositionsVariants.top;
             }
-            else if (PlayerPosition == _positionsVariants.bottom)
+            else if (PlayerPosition == PositionsVariants.bottom)
             {
                 transform.position = new Vector2(transform.position.x, 0);
-                PlayerPosition = _positionsVariants.middle;
+                PlayerPosition = PositionsVariants.middle;
             }
-            StartCoroutine(ShakeCamre(_shakeRangeWithMove, 0.15f));
+            StartCoroutine(ShakeCamera(_shakeRangeWithMove, 0.15f));
             return;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if (PlayerPosition == _positionsVariants.middle)
+            if (PlayerPosition == PositionsVariants.middle)
             {
                 transform.position = new Vector2(transform.position.x, -3f);
-                PlayerPosition = _positionsVariants.bottom;
+                PlayerPosition = PositionsVariants.bottom;
 
             }
-            else if (PlayerPosition == _positionsVariants.top)
+            else if (PlayerPosition == PositionsVariants.top)
             {
                 transform.position = new Vector2(transform.position.x, 0);
-                PlayerPosition = _positionsVariants.middle;
+                PlayerPosition = PositionsVariants.middle;
             }
-            StartCoroutine(ShakeCamre(_shakeRangeWithMove, 0.15f));
+            StartCoroutine(ShakeCamera(_shakeRangeWithMove, 0.15f));
             return;
         }
     }
@@ -143,30 +144,30 @@ public class PlayerController : MonoBehaviour
                 
                 if (touch.deltaPosition.y > 10f)
                 {
-                    if (PlayerPosition == _positionsVariants.middle)
+                    if (PlayerPosition == PositionsVariants.middle)
                     {
                         transform.position = new Vector2(transform.position.x, -3f);
-                        PlayerPosition = _positionsVariants.bottom;
+                        PlayerPosition = PositionsVariants.bottom;
                         
                     }
-                    else if (PlayerPosition == _positionsVariants.top)
+                    else if (PlayerPosition == PositionsVariants.top)
                     {
                         transform.position = new Vector2(transform.position.x, 0);
-                        PlayerPosition = _positionsVariants.middle;
+                        PlayerPosition = PositionsVariants.middle;
                     }
                 }
                 else if (touch.deltaPosition.y < -10f)
                 {
-                    if (PlayerPosition == _positionsVariants.middle)
+                    if (PlayerPosition == PositionsVariants.middle)
                     {
                         transform.position = new Vector2(transform.position.x, 3f);
-                        PlayerPosition = _positionsVariants.top;
+                        PlayerPosition = PositionsVariants.top;
 
                     }
-                    else if (PlayerPosition == _positionsVariants.bottom)
+                    else if (PlayerPosition == PositionsVariants.bottom)
                     {
                         transform.position = new Vector2(transform.position.x, 0);
-                        PlayerPosition = _positionsVariants.middle;
+                        PlayerPosition = PositionsVariants.middle;
                     }
                 }
             }

@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e681b19cd913c7f4ca7f45d98f50143e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLifesCount: 50
+  _myLifes: {fileID: 736054505}
 --- !u!114 &736054505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,7 +939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a31e1e1af565c4f82a8970df55e8db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 258972566}
 --- !u!114 &1738519532
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerScore : MonoBehaviour
 {
-    [SerializeField] private PlayerController _player;
+    private PlayerController _player;
 
     private Text _myScore;
 
@@ -13,6 +13,7 @@ public class PlayerScore : MonoBehaviour
 
     private void Start()
     {
+        _player = FindObjectOfType<PlayerController>();
         _myScore = gameObject.GetComponent<Text>();
     }
 

@@ -34,21 +34,15 @@ public class WavesSpawner : MonoBehaviour
             _isActivated = false;
         }
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_player.isAlive == false) Destroy(gameObject);
+        if (_player.isAlive == false) gameObject.SetActive(false);
 
         if (_isActivated) return;
 
         ChangeWavesState();
     }
-
-    IEnumerator SetIntervalBetweenActivate()
-    {
-        yield return new WaitForSeconds(0.8f);
-
-        _isActivated = false;
-    }
+    
 
     private void ChangeWavesState()
     {
@@ -65,7 +59,12 @@ public class WavesSpawner : MonoBehaviour
             StartCoroutine(SetIntervalBetweenActivate());
         }
     }
+    IEnumerator SetIntervalBetweenActivate()
+    {
+        yield return new WaitForSeconds(0.8f);
 
+        _isActivated = false;
+    }
     private void SpawnBomb(_positionsVariants position, GameObject wave)
     {
         if (position == _positionsVariants.top)

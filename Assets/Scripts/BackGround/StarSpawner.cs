@@ -10,7 +10,7 @@ public class StarSpawner : MonoBehaviour
     private Vector2 _position;
     private bool _isSpawned = false;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isSpawned) return;
 
@@ -19,7 +19,7 @@ public class StarSpawner : MonoBehaviour
 
     IEnumerator SetTimeBetweenSpawn()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.07f);
 
         _isSpawned = false;
     }
