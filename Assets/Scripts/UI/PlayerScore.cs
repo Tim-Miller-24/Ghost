@@ -9,37 +9,31 @@ public class PlayerScore : MonoBehaviour
     private Text _myScore;
 
     private int _score = 0;
-    private bool _isScoreAdded = false;
+
+    private WaitForSeconds _timerBetweenScoreAdding;
 
     private void Start()
     {
+        _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
+
         _player = FindObjectOfType<PlayerController>();
         _myScore = gameObject.GetComponent<Text>();
-    }
 
-    private void FixedUpdate()
-    {
-        if (_player.isAlive == false) return;
-
-        if (_isScoreAdded) return;
-
-        UpdatePlayerScore();
+        StartCoroutine(WaitBeforeAddingScore());
     }
 
     private IEnumerator WaitBeforeAddingScore()
     {
-        yield return new WaitForSeconds(0.8f);
-
-        _isScoreAdded = false;
+        while (_player.isAlive)
+        {
+            yield return _timerBetweenScoreAdding;
+            UpdatePlayerScore();
+        }
     }
 
     private void UpdatePlayerScore()
     {
-        StartCoroutine(WaitBeforeAddingScore());
-
         _score++;
         _myScore.text = $"{_score}";
-
-        _isScoreAdded = true;
     }
 }

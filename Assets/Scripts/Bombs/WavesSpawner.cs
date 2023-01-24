@@ -10,77 +10,81 @@ public class WavesSpawner : MonoBehaviour
 
     [SerializeField] private int _amountToPool;
 
-    public List<GameObject> bobmWavesInPool;
+    private List<GameObject> _wavesInPool;
 
-    private enum _positionsVariants
+    private enum PositionsVariants
     {
         top, middle, bottom
     }
 
+    private Dictionary<PositionsVariants, Vector2> BombPosition;
+
     private readonly float _xPosition = 15f;
-    private Vector2 _position;
-    private bool _isActivated;
+    private WaitForSeconds _timeBetweenReActivate;
+
+    private void Awake()
+    {
+        _wavesInPool = new List<GameObject>();
+        GameObject oneWave;
+
+        BombPosition = new Dictionary<PositionsVariants, Vector2>()
+        {
+            {PositionsVariants.top, new Vector2(_xPosition, 3f) },
+            {PositionsVariants.middle, new Vector2(_xPosition, 0) },
+            {PositionsVariants.bottom, new Vector2(_xPosition, -3f) },
+        };
+
+        for (int i = 0; i < _amountToPool; i++)
+        {
+            oneWave = Instantiate(_wavePrefab, Vector2.zero, Quaternion.identity, transform);
+            SetPositionAndSpawnWave(oneWave);
+            oneWave.SetActive(false);
+            _wavesInPool.Add(oneWave);
+        }
+    }
 
     private void Start()
     {
-        bobmWavesInPool = new List<GameObject>();
-        GameObject oneWave;
-        for (int i = 0; i < _amountToPool; i++)
-        {
-            oneWave = Instantiate(_wavePrefab, new Vector2(0, 0), Quaternion.identity, transform);
-            SetPositionAndSpawnWave(oneWave);
-            oneWave.SetActive(false);
-            bobmWavesInPool.Add(oneWave);
-            _isActivated = false;
-        }
+        _timeBetweenReActivate = new WaitForSeconds(0.8f);
+
+        StartCoroutine(SetIntervalBetweenActivate());
     }
-    private void FixedUpdate()
+
+    private List<GameObject> FindInactiveWave()
     {
-        if (_player.isAlive == false) gameObject.SetActive(false);
+        List<GameObject> inActiveWaves = new List<GameObject>();
 
-        if (_isActivated) return;
-
-        ChangeWavesState();
-    }
-    
-
-    private void ChangeWavesState()
-    {
-        int rnd = Random.Range(0, _amountToPool);
-
-        GameObject temp = bobmWavesInPool[rnd];
-
-        if (!temp.activeInHierarchy)
+        foreach (var wave in _wavesInPool)
         {
-            temp.SetActive(true);
-
-            _isActivated = true;
-
-            StartCoroutine(SetIntervalBetweenActivate());
+            if (!wave.gameObject.activeInHierarchy)
+            {
+                inActiveWaves.Add(wave);
+            }
         }
+
+        return inActiveWaves;
     }
+
+    private void ActivateWave()
+    {
+        List<GameObject> inactiveWaves = FindInactiveWave();
+
+        int randomWave = Random.Range(0, inactiveWaves.Count);
+
+        inactiveWaves[randomWave].SetActive(true);
+    }
+
     IEnumerator SetIntervalBetweenActivate()
     {
-        yield return new WaitForSeconds(0.8f);
-
-        _isActivated = false;
+        while (_player.isAlive)
+        {
+            yield return _timeBetweenReActivate;
+            ActivateWave();
+        }
     }
-    private void SpawnBomb(_positionsVariants position, GameObject wave)
+    private void SpawnBomb(Vector2 position, GameObject wave)
     {
-        if (position == _positionsVariants.top)
-        {
-            _position = new Vector2(_xPosition, 3f);
-        }
-        else if (position == _positionsVariants.middle)
-        {
-            _position = new Vector2(_xPosition, 0);
-        }
-        else if (position == _positionsVariants.bottom)
-        {
-            _position = new Vector2(_xPosition, -3f);
-        }
-
-        Instantiate(_bombPrefab, _position, Quaternion.identity, wave.transform);
+        Instantiate(_bombPrefab, position, Quaternion.identity, wave.transform);
     }
 
     private void SetPositionAndSpawnWave(GameObject wave)
@@ -90,16 +94,16 @@ public class WavesSpawner : MonoBehaviour
         switch (rnd)
         {
             case 0:
-                SpawnBomb(_positionsVariants.bottom, wave);
-                SpawnBomb(_positionsVariants.middle, wave);
+                SpawnBomb(BombPosition[PositionsVariants.top], wave);
+                SpawnBomb(BombPosition[PositionsVariants.middle], wave);
                 break;
             case 1:
-                SpawnBomb(_positionsVariants.bottom, wave);
-                SpawnBomb(_positionsVariants.top, wave);
+                SpawnBomb(BombPosition[PositionsVariants.top], wave);
+                SpawnBomb(BombPosition[PositionsVariants.bottom], wave);
                 break;
             case 2:
-                SpawnBomb(_positionsVariants.middle, wave);
-                SpawnBomb(_positionsVariants.top, wave);
+                SpawnBomb(BombPosition[PositionsVariants.middle], wave);
+                SpawnBomb(BombPosition[PositionsVariants.bottom], wave);
                 break;
         }
     }

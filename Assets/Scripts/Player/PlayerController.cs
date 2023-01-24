@@ -12,8 +12,10 @@ public class PlayerController : MonoBehaviour
     private float _shakeRangeWithMove = 0.05f;
     private float _shakeRangeWithDamage = 0.3f;
 
-    public bool isAlive = true;
-    public bool isImmortal = false;
+    public bool isAlive { get; private set; }
+    public bool isImmortal { get; private set; }
+
+    private WaitForSeconds _immortalTime;
 
     private enum PositionsVariants
     {
@@ -24,6 +26,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        isAlive = true;
+        isImmortal = false;
+
+        _immortalTime = new WaitForSeconds(2f);
+
         _animator = gameObject.GetComponentInParent<Animator>();
         _camera = FindObjectOfType<Camera>();
     }
@@ -41,6 +48,7 @@ public class PlayerController : MonoBehaviour
             TakeDamage();
         }
     }
+
     IEnumerator ShakeCamera(float shakeRange, float myDurantion = 0.5f)
     {
         float xPos;
@@ -62,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
         _camera.transform.position = originalPosition;
     }
+
     private void TakeDamage()
     {
         if (!isAlive) return;
@@ -86,9 +95,10 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SetImmortalTime()
     {
-        yield return new WaitForSeconds(2f);
+        yield return _immortalTime;
 
         isImmortal = false;
+
         _animator.SetBool("isImmortal", false);
     }
 
@@ -115,6 +125,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ShakeCamera(_shakeRangeWithMove, 0.15f));
             return;
         }
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             if (PlayerPosition == PositionsVariants.middle)
@@ -141,7 +152,6 @@ public class PlayerController : MonoBehaviour
 
             if (touch.phase == TouchPhase.Moved)
             {
-                
                 if (touch.deltaPosition.y > 10f)
                 {
                     if (PlayerPosition == PositionsVariants.middle)
