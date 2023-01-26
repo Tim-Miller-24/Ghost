@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerLifes : MonoBehaviour
+namespace MillerSoft.Ghost.GameBody
 {
-    [SerializeField] private Text _myLifes;
-
-    public int playerLifesCount { get; private set; }
-
-    public void ActivateUILifes()
+    public class PlayerLifes : MonoBehaviour
     {
-        playerLifesCount = 3;
-        _myLifes.text = $"{playerLifesCount}";
-    }
+        [SerializeField] private Text _myLifes;
 
-    private void OnValidate()
-    {
-        _myLifes = gameObject.GetComponent<Text>();
-    }
+        public int PlayerLifesCount { get; private set; }
 
-    public void UpdateLifesCount()
-    {
-        _myLifes.text = $"{playerLifesCount}";
-    }
+        public void ActivateUILifes()
+        {
+            PlayerLifesCount = 3;
+            _myLifes.text = $"{PlayerLifesCount}";
+        }
 
-    public void IncreaseHealth(int damage)
-    {
-        playerLifesCount -= damage;
+        private void OnValidate()
+        {
+            _myLifes = gameObject.GetComponent<Text>();
+        }
+
+        public void UpdateLifesCount()
+        {
+            _myLifes.text = $"{PlayerLifesCount}";
+        }
+
+        public void IncreaseHealth(int damage)
+        {
+            PlayerLifesCount -= damage;
+        }
     }
 }

@@ -2,38 +2,41 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerScore : MonoBehaviour
+namespace MillerSoft.Ghost.GameBody
 {
-    private PlayerController _player;
-
-    private Text _myScore;
-
-    private int _score = 0;
-
-    private WaitForSeconds _timerBetweenScoreAdding;
-
-    public void ActivateUIScore()
+    public class PlayerScore : MonoBehaviour
     {
-        _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
+        private PlayerController _player;
 
-        _player = FindObjectOfType<PlayerController>();
-        _myScore = gameObject.GetComponent<Text>();
+        private Text _myScore;
 
-        StartCoroutine(WaitBeforeAddingScore());
-    }
+        private int _score = 0;
 
-    private IEnumerator WaitBeforeAddingScore()
-    {
-        while (_player.isAlive)
+        private WaitForSeconds _timerBetweenScoreAdding;
+
+        public void ActivateUIScore()
         {
-            yield return _timerBetweenScoreAdding;
-            UpdatePlayerScore();
-        }
-    }
+            _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
 
-    private void UpdatePlayerScore()
-    {
-        _score++;
-        _myScore.text = $"{_score}";
+            _player = FindObjectOfType<PlayerController>();
+            _myScore = gameObject.GetComponent<Text>();
+
+            StartCoroutine(WaitBeforeAddingScore());
+        }
+
+        private IEnumerator WaitBeforeAddingScore()
+        {
+            while (_player.IsAlive)
+            {
+                yield return _timerBetweenScoreAdding;
+                AddAndUpdatePlayerScore();
+            }
+        }
+
+        private void AddAndUpdatePlayerScore()
+        {
+            _score++;
+            _myScore.text = $"{_score}";
+        }
     }
 }
