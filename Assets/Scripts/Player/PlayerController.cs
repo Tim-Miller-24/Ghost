@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private PositionsVariants PlayerPosition = PositionsVariants.middle;
 
-    private void Start()
+    public void InitialPlayer()
     {
         isAlive = true;
         isImmortal = false;

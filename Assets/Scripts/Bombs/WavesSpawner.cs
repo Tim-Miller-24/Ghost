@@ -22,7 +22,7 @@ public class WavesSpawner : MonoBehaviour
     private readonly float _xPosition = 15f;
     private WaitForSeconds _timeBetweenReActivate;
 
-    private void Awake()
+    public void SpawnWaves()
     {
         _wavesInPool = new List<GameObject>();
         GameObject oneWave;
@@ -43,7 +43,7 @@ public class WavesSpawner : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void ActivateWaves()
     {
         _timeBetweenReActivate = new WaitForSeconds(0.8f);
 
@@ -74,7 +74,7 @@ public class WavesSpawner : MonoBehaviour
         inactiveWaves[randomWave].SetActive(true);
     }
 
-    IEnumerator SetIntervalBetweenActivate()
+    private IEnumerator SetIntervalBetweenActivate()
     {
         while (_player.isAlive)
         {

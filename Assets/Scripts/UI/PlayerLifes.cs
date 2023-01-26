@@ -9,7 +9,7 @@ public class PlayerLifes : MonoBehaviour
 
     public int playerLifesCount { get; private set; }
 
-    private void Start()
+    public void ActivateUILifes()
     {
         playerLifesCount = 3;
         _myLifes.text = $"{playerLifesCount}";

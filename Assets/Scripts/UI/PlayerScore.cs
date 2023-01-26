@@ -12,7 +12,7 @@ public class PlayerScore : MonoBehaviour
 
     private WaitForSeconds _timerBetweenScoreAdding;
 
-    private void Start()
+    public void ActivateUIScore()
     {
         _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
 
