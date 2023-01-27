@@ -20,18 +20,14 @@ namespace MillerSoft.Ghost.GameBody
 
         [Header("Stars")]
         [SerializeField] 
-        private StarController _starSpawner;
+        private InitializableBase[] _initializables;
 
         private void Start()
         {
-            _playerController.InitialPlayer();
-            _uiPlayerLifes.ActivateUILifes();
-            _uiPlayerScore.ActivateUIScore();
-
-            _wavesSpawner.SpawnWaves();
-            _wavesSpawner.ActivateWaves();
-
-            _starSpawner.ActivateStarSpawner();
+            foreach (var initializable in _initializables)
+            {
+                initializable.Initialize();
+            }
         }
     }
 }

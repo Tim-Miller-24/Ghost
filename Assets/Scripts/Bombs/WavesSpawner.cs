@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class WavesSpawner : MonoBehaviour
+    public class WavesSpawner : InitializableBase
     {
         [SerializeField] 
         private GameObject _wavePrefab;
@@ -28,7 +28,8 @@ namespace MillerSoft.Ghost.GameBody
         private readonly float _xPosition = 15f;
         private WaitForSeconds _timeBetweenReActivate;
 
-        public void SpawnWaves()
+
+        public override void Initialize()
         {
             _wavesInPool = new List<GameObject>();
 
@@ -48,10 +49,7 @@ namespace MillerSoft.Ghost.GameBody
                 oneWave.SetActive(false);
                 _wavesInPool.Add(oneWave);
             }
-        }
 
-        public void ActivateWaves()
-        {
             _timeBetweenReActivate = new WaitForSeconds(0.8f);
 
             StartCoroutine(SetIntervalBetweenActivate());

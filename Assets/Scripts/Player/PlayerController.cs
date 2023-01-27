@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : InitializableBase
     {
         [SerializeField] 
         private PlayerLifes _playerLifes;
@@ -27,7 +27,7 @@ namespace MillerSoft.Ghost.GameBody
 
         private PositionsVariants PlayerPosition = PositionsVariants.middle;
 
-        public void InitialPlayer()
+        public override void Initialize()
         {
             IsAlive = true;
             IsImmortal = false;
@@ -78,8 +78,7 @@ namespace MillerSoft.Ghost.GameBody
         {
             if (!IsAlive) return;
 
-            _playerLifes.IncreaseHealth(1);
-            _playerLifes.UpdateLifesCount();
+            _playerLifes.DecreaseHealthAndUpdateUI(1);
 
             IsImmortal = true;
             _animator.SetBool("isImmortal", true);
@@ -144,46 +143,6 @@ namespace MillerSoft.Ghost.GameBody
                 }
                 StartCoroutine(ShakeCamera(_shakeRangeWithMove, 0.15f));
                 return;
-            }
-        }
-
-        private void MovePlayerWithTouch()
-        {
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-
-                if (touch.phase == TouchPhase.Moved)
-                {
-                    if (touch.deltaPosition.y > 10f)
-                    {
-                        if (PlayerPosition == PositionsVariants.middle)
-                        {
-                            transform.position = new Vector2(transform.position.x, -3f);
-                            PlayerPosition = PositionsVariants.bottom;
-
-                        }
-                        else if (PlayerPosition == PositionsVariants.top)
-                        {
-                            transform.position = new Vector2(transform.position.x, 0);
-                            PlayerPosition = PositionsVariants.middle;
-                        }
-                    }
-                    else if (touch.deltaPosition.y < -10f)
-                    {
-                        if (PlayerPosition == PositionsVariants.middle)
-                        {
-                            transform.position = new Vector2(transform.position.x, 3f);
-                            PlayerPosition = PositionsVariants.top;
-
-                        }
-                        else if (PlayerPosition == PositionsVariants.bottom)
-                        {
-                            transform.position = new Vector2(transform.position.x, 0);
-                            PlayerPosition = PositionsVariants.middle;
-                        }
-                    }
-                }
             }
         }
     }

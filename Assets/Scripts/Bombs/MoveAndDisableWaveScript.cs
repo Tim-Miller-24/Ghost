@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class MoveAndDisableWaveScript : MonoBehaviour
+    public class MoveAndDisableWaveScript : InitializableBase
     {
         private readonly float _speed = 10f;
 
@@ -29,6 +29,11 @@ namespace MillerSoft.Ghost.GameBody
 
             gameObject.SetActive(false);
             transform.position = Vector2.zero;
+        }
+
+        public override void Initialize()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

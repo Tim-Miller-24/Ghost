@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class PlayerScore : MonoBehaviour
+    public class PlayerScore : InitializableBase
     {
         private PlayerController _player;
 
@@ -13,16 +13,6 @@ namespace MillerSoft.Ghost.GameBody
         private int _score = 0;
 
         private WaitForSeconds _timerBetweenScoreAdding;
-
-        public void ActivateUIScore()
-        {
-            _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
-
-            _player = FindObjectOfType<PlayerController>();
-            _myScore = gameObject.GetComponent<Text>();
-
-            StartCoroutine(WaitBeforeAddingScore());
-        }
 
         private IEnumerator WaitBeforeAddingScore()
         {
@@ -37,6 +27,16 @@ namespace MillerSoft.Ghost.GameBody
         {
             _score++;
             _myScore.text = $"{_score}";
+        }
+
+        public override void Initialize()
+        {
+            _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
+
+            _player = FindObjectOfType<PlayerController>();
+            _myScore = gameObject.GetComponent<Text>();
+
+            StartCoroutine(WaitBeforeAddingScore());
         }
     }
 }

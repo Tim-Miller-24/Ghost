@@ -5,32 +5,28 @@ using UnityEngine.UI;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class PlayerLifes : MonoBehaviour
+    public class PlayerLifes : InitializableBase
     {
         [SerializeField] 
         private Text _myLifes;
 
         public int PlayerLifesCount { get; private set; }
 
-        public void ActivateUILifes()
-        {
-            PlayerLifesCount = 3;
-            _myLifes.text = $"{PlayerLifesCount}";
-        }
-
         private void OnValidate()
         {
             _myLifes = gameObject.GetComponent<Text>();
         }
 
-        public void UpdateLifesCount()
+        public void DecreaseHealthAndUpdateUI(int damage)
         {
+            PlayerLifesCount -= damage;
             _myLifes.text = $"{PlayerLifesCount}";
         }
 
-        public void IncreaseHealth(int damage)
+        public override void Initialize()
         {
-            PlayerLifesCount -= damage;
+            PlayerLifesCount = 3;
+            _myLifes.text = $"{PlayerLifesCount}";
         }
     }
 }

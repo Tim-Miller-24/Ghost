@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class StarController : MonoBehaviour
+    public class StarController : InitializableBase
     {
         [SerializeField] 
         private GameObject _starPrefab;
@@ -18,7 +18,7 @@ namespace MillerSoft.Ghost.GameBody
         private readonly float _speed = 8f;
         private Vector2 _positionForSpawn;
 
-        public void ActivateStarSpawner()
+        public override void Initialize()
         {
             _starsQueue = new Queue<GameObject>();
 
@@ -45,10 +45,8 @@ namespace MillerSoft.Ghost.GameBody
 
         private void SpawnStar()
         {
-            GameObject myStar;
-
             _positionForSpawn = new Vector2(_xPosition, Random.Range(-6f, 6f));
-            myStar = Instantiate(_starPrefab, _positionForSpawn, Quaternion.identity, transform);
+            GameObject myStar = Instantiate(_starPrefab, _positionForSpawn, Quaternion.identity, transform);
 
             _starsQueue.Enqueue(myStar);
         }
@@ -67,5 +65,7 @@ namespace MillerSoft.Ghost.GameBody
 
             Destroy(_starsQueue.Dequeue());
         }
+
+        
     }
 }
