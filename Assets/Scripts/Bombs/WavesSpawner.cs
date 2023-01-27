@@ -6,11 +6,15 @@ namespace MillerSoft.Ghost.GameBody
 {
     public class WavesSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject _wavePrefab;
-        [SerializeField] private GameObject _bombPrefab;
-        [SerializeField] private PlayerController _player;
+        [SerializeField] 
+        private GameObject _wavePrefab;
+        [SerializeField] 
+        private GameObject _bombPrefab;
+        [SerializeField] 
+        private PlayerController _player;
 
-        [SerializeField] private int _amountToPool;
+        [SerializeField] 
+        private int _amountToPool;
 
         private List<GameObject> _wavesInPool;
 

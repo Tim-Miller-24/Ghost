@@ -7,7 +7,8 @@ namespace MillerSoft.Ghost.GameBody
 {
     public class PlayerLifes : MonoBehaviour
     {
-        [SerializeField] private Text _myLifes;
+        [SerializeField] 
+        private Text _myLifes;
 
         public int PlayerLifesCount { get; private set; }
 

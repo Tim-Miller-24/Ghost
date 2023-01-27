@@ -6,7 +6,8 @@ namespace MillerSoft.Ghost.GameBody
 {
     public class StarController : MonoBehaviour
     {
-        [SerializeField] private GameObject _starPrefab;
+        [SerializeField] 
+        private GameObject _starPrefab;
 
         private WaitForSeconds _timeToSpawn;
         private WaitForSeconds _timeToDestroy;

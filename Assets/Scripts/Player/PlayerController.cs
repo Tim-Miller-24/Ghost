@@ -6,7 +6,8 @@ namespace MillerSoft.Ghost.GameBody
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private PlayerLifes _playerLifes;
+        [SerializeField] 
+        private PlayerLifes _playerLifes;
 
         private Camera _camera;
         private Animator _animator;
