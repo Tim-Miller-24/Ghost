@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MillerSoft.Ghost.GameBody
 {
@@ -8,6 +7,8 @@ namespace MillerSoft.Ghost.GameBody
     {
         [SerializeField] 
         private PlayerLifes _playerLifes;
+        [SerializeField]
+        private EndGamePopUp _endGamePopUp;
 
         private Camera _camera;
         private Animator _animator;
@@ -91,7 +92,7 @@ namespace MillerSoft.Ghost.GameBody
             {
                 IsAlive = false;
                 _animator.SetBool("isDead", true);
-                StartCoroutine(RestartGame());
+                _endGamePopUp.gameObject.SetActive(true);
             }
         }
 
@@ -102,12 +103,6 @@ namespace MillerSoft.Ghost.GameBody
             IsImmortal = false;
 
             _animator.SetBool("isImmortal", false);
-        }
-
-        private IEnumerator RestartGame()
-        {
-            yield return new WaitForSeconds(1.5f);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         private void MovePLayer()

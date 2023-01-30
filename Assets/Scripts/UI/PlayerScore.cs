@@ -10,7 +10,7 @@ namespace MillerSoft.Ghost.GameBody
 
         private Text _myScore;
 
-        private int _score = 0;
+        private int _score;
 
         private WaitForSeconds _timerBetweenScoreAdding;
 
@@ -31,6 +31,8 @@ namespace MillerSoft.Ghost.GameBody
 
         public override void Initialize()
         {
+            _score = 0;
+
             _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
 
             _player = FindObjectOfType<PlayerController>();

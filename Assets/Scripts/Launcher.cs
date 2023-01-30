@@ -19,11 +19,25 @@ namespace MillerSoft.Ghost.GameBody
         private WavesSpawner _wavesSpawner;
 
         [Header("Stars")]
+        [SerializeField]
+        private StarController _starController;
+
+        [Header("Initializator")]
         [SerializeField] 
         private InitializableBase[] _initializables;
 
         private void Start()
         {
+            Launch();
+        }
+
+        public void Launch()
+        {
+            _initializables = new InitializableBase[]
+            {
+                _playerController, _uiPlayerLifes, _uiPlayerScore, _wavesSpawner, _starController
+            };
+
             foreach (var initializable in _initializables)
             {
                 initializable.Initialize();
