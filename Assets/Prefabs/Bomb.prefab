@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7063588008659068107}
   - component: {fileID: 9214425903877238589}
   - component: {fileID: -3336228588602403173}
+  - component: {fileID: -9135618035161173541}
+  - component: {fileID: -2658120624700429855}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Bomb
@@ -99,3 +101,34 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.63, y: 0.62}
   m_Direction: 0
+--- !u!114 &-9135618035161173541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143595654451041176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cfe49e34d3b49a44963db8ff1af5c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &-2658120624700429855
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143595654451041176}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c67c09c5d107be145a2ee7939bb0d73e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

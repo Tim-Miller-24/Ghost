@@ -14,21 +14,6 @@ namespace MillerSoft.Ghost.GameBody
 
         private WaitForSeconds _timerBetweenScoreAdding;
 
-        private IEnumerator WaitBeforeAddingScore()
-        {
-            while (_player.IsAlive)
-            {
-                yield return _timerBetweenScoreAdding;
-                AddAndUpdatePlayerScore();
-            }
-        }
-
-        private void AddAndUpdatePlayerScore()
-        {
-            _score++;
-            _myScore.text = $"{_score}";
-        }
-
         public override void Initialize()
         {
             _score = 0;
@@ -38,7 +23,18 @@ namespace MillerSoft.Ghost.GameBody
             _player = FindObjectOfType<PlayerController>();
             _myScore = gameObject.GetComponent<Text>();
 
-            StartCoroutine(WaitBeforeAddingScore());
+            StartCoroutine(AddAndUpdatePlayerScore());
+        }
+
+        private IEnumerator AddAndUpdatePlayerScore()
+        {
+            while (_player.IsAlive)
+            {
+                yield return _timerBetweenScoreAdding;
+
+                _score++;
+                _myScore.text = $"{_score}";
+            }
         }
     }
 }

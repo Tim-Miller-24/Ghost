@@ -49,7 +49,29 @@ namespace MillerSoft.Ghost.GameBody
             if (collision.tag is "Bomb")
             {
                 if (IsImmortal) return;
+                collision.GetComponent<BombAnimationController>().SetBombAnimation(Random.Range(0, 2));
                 TakeDamage();
+            }
+        }
+
+        private void TakeDamage()
+        {
+            if (!IsAlive) return;
+
+            _playerLifes.DecreaseHealthAndUpdateUI(1);
+
+            IsImmortal = true;
+            _animator.SetBool("isImmortal", true);
+
+            StartCoroutine(ShakeCamera(_shakeRangeWithDamage));
+
+            StartCoroutine(SetImmortalTime());
+
+            if (_playerLifes.PlayerLifesCount == 0)
+            {
+                IsAlive = false;
+                _animator.SetBool("isDead", true);
+                _endGamePopUp.gameObject.SetActive(true);
             }
         }
 
@@ -73,27 +95,6 @@ namespace MillerSoft.Ghost.GameBody
             }
 
             _camera.transform.position = originalPosition;
-        }
-
-        private void TakeDamage()
-        {
-            if (!IsAlive) return;
-
-            _playerLifes.DecreaseHealthAndUpdateUI(1);
-
-            IsImmortal = true;
-            _animator.SetBool("isImmortal", true);
-
-            StartCoroutine(ShakeCamera(_shakeRangeWithDamage));
-
-            StartCoroutine(SetImmortalTime());
-
-            if (_playerLifes.PlayerLifesCount == 0)
-            {
-                IsAlive = false;
-                _animator.SetBool("isDead", true);
-                _endGamePopUp.gameObject.SetActive(true);
-            }
         }
 
         private IEnumerator SetImmortalTime()

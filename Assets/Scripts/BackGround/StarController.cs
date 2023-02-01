@@ -28,6 +28,11 @@ namespace MillerSoft.Ghost.GameBody
             StartCoroutine(SetTimeBetweenSpawn());
         }
 
+        private void Update()
+        {
+            MoveStars();
+        }
+
         private IEnumerator SetTimeBetweenSpawn()
         {
             while (true)
@@ -36,11 +41,6 @@ namespace MillerSoft.Ghost.GameBody
                 SpawnStar();
                 StartCoroutine(DestroyStar());
             }
-        }
-
-        private void Update()
-        {
-            MoveStars();
         }
 
         private void SpawnStar()
@@ -65,7 +65,5 @@ namespace MillerSoft.Ghost.GameBody
 
             Destroy(_starsQueue.Dequeue());
         }
-
-        
     }
 }

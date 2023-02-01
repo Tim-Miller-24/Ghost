@@ -28,7 +28,6 @@ namespace MillerSoft.Ghost.GameBody
         private readonly float _xPosition = 15f;
         private WaitForSeconds _timeBetweenReActivate;
 
-
         public override void Initialize()
         {
             _wavesInPool = new List<GameObject>();
@@ -55,44 +54,6 @@ namespace MillerSoft.Ghost.GameBody
             StartCoroutine(SetIntervalBetweenActivate());
         }
 
-        private List<GameObject> FindInactiveWave()
-        {
-            List<GameObject> inActiveWaves = new List<GameObject>();
-
-            foreach (var wave in _wavesInPool)
-            {
-                if (!wave.gameObject.activeInHierarchy)
-                {
-                    inActiveWaves.Add(wave);
-                }
-            }
-
-            return inActiveWaves;
-        }
-
-        private void ActivateWave()
-        {
-            List<GameObject> inactiveWaves = FindInactiveWave();
-
-            int randomWave = Random.Range(0, inactiveWaves.Count);
-
-            inactiveWaves[randomWave].SetActive(true);
-        }
-
-        private IEnumerator SetIntervalBetweenActivate()
-        {
-            while (_player.IsAlive)
-            {
-                yield return _timeBetweenReActivate;
-                ActivateWave();
-            }
-        }
-
-        private void SpawnBomb(Vector2 position, GameObject wave)
-        {
-            Instantiate(_bombPrefab, position, Quaternion.identity, wave.transform);
-        }
-
         private void SetPositionAndSpawnWave(GameObject wave)
         {
             int rnd = Random.Range(0, 3);
@@ -112,6 +73,44 @@ namespace MillerSoft.Ghost.GameBody
                     SpawnBomb(_bombPosition[PositionsVariants.bottom], wave);
                     break;
             }
+        }
+
+        private void SpawnBomb(Vector2 position, GameObject wave)
+        {
+            Instantiate(_bombPrefab, position, Quaternion.identity, wave.transform);
+        }
+
+        private IEnumerator SetIntervalBetweenActivate()
+        {
+            while (_player.IsAlive)
+            {
+                yield return _timeBetweenReActivate;
+                ActivateWave();
+            }
+        }
+
+        private void ActivateWave()
+        {
+            List<GameObject> inactiveWaves = FindInactiveWave();
+
+            int randomWave = Random.Range(0, inactiveWaves.Count);
+
+            inactiveWaves[randomWave].SetActive(true);
+        }
+
+        private List<GameObject> FindInactiveWave()
+        {
+            List<GameObject> inActiveWaves = new List<GameObject>();
+
+            foreach (var wave in _wavesInPool)
+            {
+                if (!wave.gameObject.activeInHierarchy)
+                {
+                    inActiveWaves.Add(wave);
+                }
+            }
+
+            return inActiveWaves;
         }
     }
 }

@@ -17,15 +17,15 @@ namespace MillerSoft.Ghost.GameBody
             _myLifes = gameObject.GetComponent<Text>();
         }
 
-        public void DecreaseHealthAndUpdateUI(int damage)
+        public override void Initialize()
         {
-            PlayerLifesCount -= damage;
+            PlayerLifesCount = 10;
             _myLifes.text = $"{PlayerLifesCount}";
         }
 
-        public override void Initialize()
+        public void DecreaseHealthAndUpdateUI(int damage)
         {
-            PlayerLifesCount = 3;
+            PlayerLifesCount -= damage;
             _myLifes.text = $"{PlayerLifesCount}";
         }
     }

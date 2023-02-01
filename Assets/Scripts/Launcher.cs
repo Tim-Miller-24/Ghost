@@ -17,6 +17,10 @@ namespace MillerSoft.Ghost.GameBody
         [Header("Bombs")]
         [SerializeField] 
         private WavesSpawner _wavesSpawner;
+        [SerializeField]
+        private MoveAndDisableWaveScript _moveAndDisableWaveScript;
+        [SerializeField]
+        private BombAnimationController _bombAnimationController;
 
         [Header("Stars")]
         [SerializeField]
@@ -35,7 +39,7 @@ namespace MillerSoft.Ghost.GameBody
         {
             _initializables = new InitializableBase[]
             {
-                _playerController, _uiPlayerLifes, _uiPlayerScore, _wavesSpawner, _starController
+                _playerController, _uiPlayerLifes, _uiPlayerScore, _wavesSpawner, _moveAndDisableWaveScript, _bombAnimationController, _starController
             };
 
             foreach (var initializable in _initializables)

@@ -8,14 +8,13 @@ namespace MillerSoft.Ghost.GameBody
     {
         private readonly float _speed = 10f;
 
-        private WaitForSeconds _timeToDisableBomb;
+        private WaitForSeconds _timeToDisableWave;
 
-        private void MoveWave()
+        public override void Initialize()
         {
-            _timeToDisableBomb = new WaitForSeconds(3f);
+            _timeToDisableWave = new WaitForSeconds(3f);
 
-            transform.position = new Vector2(transform.position.x - _speed * Time.deltaTime, transform.position.y);
-            StartCoroutine(DisableBomb());
+            Debug.Log(_timeToDisableWave);
         }
 
         private void Update()
@@ -23,17 +22,17 @@ namespace MillerSoft.Ghost.GameBody
             if (gameObject.activeInHierarchy) MoveWave();
         }
 
-        private IEnumerator DisableBomb()
+        private void MoveWave()
         {
-            yield return _timeToDisableBomb;
-
-            gameObject.SetActive(false);
-            transform.position = Vector2.zero;
+            transform.position = new Vector2(transform.position.x - _speed * Time.deltaTime, transform.position.y);
+            StartCoroutine(DisableWave());
         }
 
-        public override void Initialize()
+        private IEnumerator DisableWave()
         {
-            throw new System.NotImplementedException();
+            yield return _timeToDisableWave;
+            gameObject.SetActive(false);
+            transform.position = Vector2.zero;
         }
     }
 }
