@@ -37,6 +37,8 @@ namespace MillerSoft.Ghost.GameBody
 
             _animator = gameObject.GetComponentInParent<Animator>();
             _camera = FindObjectOfType<Camera>();
+
+            _animator.SetBool("isDead", false);
         }
 
         private void Update()
@@ -48,9 +50,9 @@ namespace MillerSoft.Ghost.GameBody
         {
             if (collision.tag is "Bomb")
             {
-                if (IsImmortal) return;
-                collision.GetComponent<BombAnimationController>().SetBombAnimation(Random.Range(0, 2));
+                if (IsImmortal || !IsAlive) return;
                 TakeDamage();
+                collision.GetComponent<BombAnimationController>().SetBombAnimation(Random.Range(0, 2));
             }
         }
 

@@ -19,7 +19,7 @@ namespace MillerSoft.Ghost.GameBody
 
         public override void Initialize()
         {
-            PlayerLifesCount = 10;
+            PlayerLifesCount = 2;
             _myLifes.text = $"{PlayerLifesCount}";
         }
 

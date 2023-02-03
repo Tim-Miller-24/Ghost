@@ -13,7 +13,6 @@ namespace MillerSoft.Ghost.GameBody
         [SerializeField] 
         private PlayerController _player;
 
-        [SerializeField] 
         private int _amountToPool;
 
         private List<GameObject> _wavesInPool;
@@ -25,18 +24,22 @@ namespace MillerSoft.Ghost.GameBody
 
         private Dictionary<PositionsVariants, Vector2> _bombPosition;
 
-        private readonly float _xPosition = 15f;
+        private readonly float _spawnPositionX = 15f;
         private WaitForSeconds _timeBetweenReActivate;
 
         public override void Initialize()
         {
             _wavesInPool = new List<GameObject>();
 
+            _amountToPool = 15;
+
+            _wavesInPool.Clear();
+
             _bombPosition = new Dictionary<PositionsVariants, Vector2>()
             {
-                {PositionsVariants.top, new Vector2(_xPosition, 3f) },
-                {PositionsVariants.middle, new Vector2(_xPosition, 0) },
-                {PositionsVariants.bottom, new Vector2(_xPosition, -3f) },
+                {PositionsVariants.top, new Vector2(_spawnPositionX, 3f) },
+                {PositionsVariants.middle, new Vector2(_spawnPositionX, 0) },
+                {PositionsVariants.bottom, new Vector2(_spawnPositionX, -3f) },
             };
 
             GameObject oneWave;
@@ -51,7 +54,7 @@ namespace MillerSoft.Ghost.GameBody
 
             _timeBetweenReActivate = new WaitForSeconds(0.8f);
 
-            StartCoroutine(SetIntervalBetweenActivate());
+            StartCoroutine(SetIntervalAndActivate());
         }
 
         private void SetPositionAndSpawnWave(GameObject wave)
@@ -80,7 +83,7 @@ namespace MillerSoft.Ghost.GameBody
             Instantiate(_bombPrefab, position, Quaternion.identity, wave.transform);
         }
 
-        private IEnumerator SetIntervalBetweenActivate()
+        private IEnumerator SetIntervalAndActivate()
         {
             while (_player.IsAlive)
             {

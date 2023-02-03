@@ -14,6 +14,11 @@ namespace MillerSoft.Ghost.GameBody
 
         public override void Initialize()
         {
+            
+        }
+
+        private void Start()
+        {
             _timeToResetBombState = new WaitForSeconds(3f);
 
             _animator = gameObject.GetComponent<Animator>();
@@ -32,10 +37,10 @@ namespace MillerSoft.Ghost.GameBody
                 _animator.SetBool("isChangingColor", _isChangedColor);
             }
 
-            StartCoroutine(ResetBombState());
+            StartCoroutine(ResetBombStateToIdle());
         }
 
-        private IEnumerator ResetBombState()
+        private IEnumerator ResetBombStateToIdle()
         {
             yield return _timeToResetBombState;
             _isBounced = false;

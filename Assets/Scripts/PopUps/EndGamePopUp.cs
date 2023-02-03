@@ -7,15 +7,17 @@ namespace MillerSoft.Ghost.GameBody
 {
     public class EndGamePopUp : MonoBehaviour
     {
-        [SerializeField]
         private Button _restartButton;
-        [SerializeField]
         private Button _quitButton;
+
+        private Launcher _launcher;
 
         private void Start()
         {
             _restartButton = transform.GetChild(0).GetComponent<Button>();
             _quitButton = transform.GetChild(1).GetComponent<Button>();
+
+            _launcher = FindObjectOfType<Launcher>();
 
             _restartButton.onClick.AddListener(() => { RestartGame(); });
 
@@ -24,7 +26,8 @@ namespace MillerSoft.Ghost.GameBody
 
         public void RestartGame()
         {
-
+            _launcher.Launch();
+            gameObject.SetActive(false);
         }
 
         private void QuitGame()
