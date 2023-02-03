@@ -15,7 +15,7 @@ namespace MillerSoft.Ghost.GameBody
         private Queue<GameObject> _starsQueue;
 
         private readonly float _spawnPositionX = 11f;
-        private readonly float _speed = 8f;
+        private readonly float _speedOfStars = 8f;
 
         private Vector2 _positionForSpawn;
 
@@ -29,7 +29,7 @@ namespace MillerSoft.Ghost.GameBody
 
         private void Start()
         {
-            StartCoroutine(SetTimeAndSpawn());
+            StartCoroutine(SetTimeToSpawn());
         }
 
         private void Update()
@@ -37,25 +37,15 @@ namespace MillerSoft.Ghost.GameBody
             MoveStars();
         }
 
-        public void ClearStarsQueue()
-        {
-            foreach (var star in _starsQueue)
-            {
-                Destroy(star);
-            }
-
-            _starsQueue.Clear();
-        }
-
         private void MoveStars()
         {
             foreach (var star in _starsQueue)
             {
-                star.transform.position = new Vector2(star.transform.position.x - _speed * Time.deltaTime, star.transform.position.y);
+                star.transform.position = new Vector2(star.transform.position.x - _speedOfStars * Time.deltaTime, star.transform.position.y);
             }
         }
 
-        private IEnumerator SetTimeAndSpawn()
+        private IEnumerator SetTimeToSpawn()
         {
             while (true)
             {

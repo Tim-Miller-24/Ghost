@@ -59,58 +59,6 @@ namespace MillerSoft.Ghost.GameBody
             }
         }
 
-        private void TakeDamage()
-        {
-            if (!IsAlive) return;
-
-            _playerLifes.DecreaseHealthAndUpdateUI(1);
-
-            IsImmortal = true;
-            _animator.SetBool("isImmortal", true);
-
-            StartCoroutine(ShakeCamera(_shakeRangeWithDamage));
-
-            StartCoroutine(SetImmortalTime());
-
-            if (_playerLifes.PlayerLifesCount == 0)
-            {
-                IsAlive = false;
-                _animator.SetBool("isDead", true);
-                _endGamePopUp.gameObject.SetActive(true);
-            }
-        }
-
-        private IEnumerator ShakeCamera(float shakeRange, float myDurantion = 0.5f)
-        {
-            float xPos;
-            float yPos;
-
-            float timeLeft = Time.time;
-            float duration = myDurantion;
-
-            Vector3 originalPosition = _camera.transform.position;
-
-            while ((timeLeft + duration) > Time.time)
-            {
-                xPos = Random.Range(-shakeRange, shakeRange);
-                yPos = Random.Range(-shakeRange, shakeRange);
-
-                _camera.transform.position = new Vector3(xPos, yPos, _camera.transform.position.z);
-                yield return null;
-            }
-
-            _camera.transform.position = originalPosition;
-        }
-
-        private IEnumerator SetImmortalTime()
-        {
-            yield return _immortalTime;
-
-            IsImmortal = false;
-
-            _animator.SetBool("isImmortal", false);
-        }
-
         private void MovePLayer()
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -146,5 +94,56 @@ namespace MillerSoft.Ghost.GameBody
                 return;
             }
         }
+
+        private void TakeDamage()
+        {
+            _playerLifes.DecreaseHealthAndUpdateUI(1);
+
+            IsImmortal = true;
+            _animator.SetBool("isImmortal", true);
+
+            StartCoroutine(ShakeCamera(_shakeRangeWithDamage));
+
+            StartCoroutine(DisableImmortalState());
+
+            if (_playerLifes.PlayerLifesCount == 0)
+            {
+                IsAlive = false;
+                _animator.SetBool("isDead", true);
+                _endGamePopUp.gameObject.SetActive(true);
+            }
+        }
+
+        private IEnumerator ShakeCamera(float shakeRange, float myDurantion = 0.5f)
+        {
+            float xPos;
+            float yPos;
+
+            float timeLeft = Time.time;
+            float duration = myDurantion;
+
+            Vector3 originalPosition = _camera.transform.position;
+
+            while ((timeLeft + duration) > Time.time)
+            {
+                xPos = Random.Range(-shakeRange, shakeRange);
+                yPos = Random.Range(-shakeRange, shakeRange);
+
+                _camera.transform.position = new Vector3(xPos, yPos, _camera.transform.position.z);
+                yield return null;
+            }
+
+            _camera.transform.position = originalPosition;
+        }
+
+        private IEnumerator DisableImmortalState()
+        {
+            yield return _immortalTime;
+
+            IsImmortal = false;
+
+            _animator.SetBool("isImmortal", false);
+        }
+
     }
 }

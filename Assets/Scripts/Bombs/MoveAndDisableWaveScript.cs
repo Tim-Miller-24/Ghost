@@ -10,7 +10,6 @@ namespace MillerSoft.Ghost.GameBody
 
         private WaitForSeconds _timeToDisableWave;
 
-
         private void Awake()
         {
             _timeToDisableWave = new WaitForSeconds(3f);

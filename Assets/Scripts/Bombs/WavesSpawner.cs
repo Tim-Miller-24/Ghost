@@ -51,7 +51,7 @@ namespace MillerSoft.Ghost.GameBody
                 _wavesInPool.Add(oneWave);
             }
 
-            StartCoroutine(SetIntervalAndActivate());
+            StartCoroutine(SetIntervalToActivateWave());
         }
 
         public void ClearWavesPool()
@@ -90,7 +90,7 @@ namespace MillerSoft.Ghost.GameBody
             Instantiate(_bombPrefab, position, Quaternion.identity, wave.transform);
         }
 
-        private IEnumerator SetIntervalAndActivate()
+        private IEnumerator SetIntervalToActivateWave()
         {
             while (_player.IsAlive)
             {
