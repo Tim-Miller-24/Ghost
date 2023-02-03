@@ -28,12 +28,15 @@ namespace MillerSoft.Ghost.GameBody
 
         private PositionsVariants PlayerPosition = PositionsVariants.middle;
 
+        private void Awake()
+        {
+            _immortalTime = new WaitForSeconds(2f);
+        }
+
         public override void Initialize()
         {
             IsAlive = true;
             IsImmortal = false;
-
-            _immortalTime = new WaitForSeconds(2f);
 
             _animator = gameObject.GetComponentInParent<Animator>();
             _camera = FindObjectOfType<Camera>();

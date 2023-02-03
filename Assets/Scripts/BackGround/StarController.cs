@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class StarController : InitializableBase
+    public class StarController : MonoBehaviour
     {
         [SerializeField] 
         private GameObject _starPrefab;
@@ -14,30 +14,37 @@ namespace MillerSoft.Ghost.GameBody
 
         private Queue<GameObject> _starsQueue;
 
-        private readonly float _xPosition = 11f;
+        private readonly float _spawnPositionX = 11f;
         private readonly float _speed = 8f;
+
         private Vector2 _positionForSpawn;
 
-        private bool _isCanSpawn;
-
-        public override void Initialize()
+        private void Awake()
         {
-            _isCanSpawn = false;
             _starsQueue = new Queue<GameObject>();
-
-            Debug.Log(_starsQueue.Count);
 
             _timeToSpawn = new WaitForSeconds(0.07f);
             _timeToDestroy = new WaitForSeconds(3f);
+        }
 
+        private void Start()
+        {
             StartCoroutine(SetTimeAndSpawn());
-            _isCanSpawn = true;
         }
 
         private void Update()
         {
-            if (!_isCanSpawn) return;
             MoveStars();
+        }
+
+        public void ClearStarsQueue()
+        {
+            foreach (var star in _starsQueue)
+            {
+                Destroy(star);
+            }
+
+            _starsQueue.Clear();
         }
 
         private void MoveStars()
@@ -60,7 +67,7 @@ namespace MillerSoft.Ghost.GameBody
 
         private void SpawnStar()
         {
-            _positionForSpawn = new Vector2(_xPosition, Random.Range(-6f, 6f));
+            _positionForSpawn = new Vector2(_spawnPositionX, Random.Range(-6f, 6f));
             GameObject myStar = Instantiate(_starPrefab, _positionForSpawn, Quaternion.identity, transform);
 
             _starsQueue.Enqueue(myStar);

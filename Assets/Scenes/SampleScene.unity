@@ -152,14 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e8ce5582c7ad9408f439af08dda0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initializables:
+  initializables:
   - {fileID: 258972566}
-  - {fileID: 736054504}
   - {fileID: 1738519531}
-  - {fileID: 1378423420}
+  - {fileID: 736054504}
   - {fileID: 965709438}
-  - {fileID: 4553185289549466103, guid: 6d219e5bdd9ace5408cdf995b9b48e53, type: 3}
-  - {fileID: -9135618035161173541, guid: 61b033786f15e864987a3e64a5771d95, type: 3}
 --- !u!4 &149131862
 Transform:
   m_ObjectHideFlags: 0
@@ -1348,6 +1345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90f5666929828e45b1534590e3d3c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _launcher: {fileID: 149131861}
+  _wavesSpawner: {fileID: 965709438}
 --- !u!1 &1258566488
 GameObject:
   m_ObjectHideFlags: 0

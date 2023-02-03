@@ -7,7 +7,7 @@ namespace MillerSoft.Ghost.GameBody
     public class Launcher : MonoBehaviour
     {
         [SerializeField]
-        private InitializableBase[] _initializables;
+        protected InitializableBase[] initializables;
 
         private void Start()
         {
@@ -16,7 +16,7 @@ namespace MillerSoft.Ghost.GameBody
 
         public void Launch()
         {
-            foreach (var initializable in _initializables)
+            foreach (var initializable in initializables)
             {
                 initializable.Initialize();
             }

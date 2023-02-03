@@ -4,18 +4,14 @@ using UnityEngine;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class MoveAndDisableWaveScript : InitializableBase
+    public class MoveAndDisableWaveScript : MonoBehaviour
     {
         private readonly float _waveSpeed = 10f;
 
         private WaitForSeconds _timeToDisableWave;
 
-        public override void Initialize()
-        {
-            
-        }
 
-        private void Start()
+        private void Awake()
         {
             _timeToDisableWave = new WaitForSeconds(3f);
         }

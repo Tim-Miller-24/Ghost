@@ -10,14 +10,15 @@ namespace MillerSoft.Ghost.GameBody
         private Button _restartButton;
         private Button _quitButton;
 
+        [SerializeField]
         private Launcher _launcher;
+        [SerializeField]
+        private WavesSpawner _wavesSpawner;
 
         private void Start()
         {
             _restartButton = transform.GetChild(0).GetComponent<Button>();
             _quitButton = transform.GetChild(1).GetComponent<Button>();
-
-            _launcher = FindObjectOfType<Launcher>();
 
             _restartButton.onClick.AddListener(() => { RestartGame(); });
 
@@ -26,6 +27,8 @@ namespace MillerSoft.Ghost.GameBody
 
         public void RestartGame()
         {
+            _wavesSpawner.ClearWavesPool();
+
             _launcher.Launch();
             gameObject.SetActive(false);
         }

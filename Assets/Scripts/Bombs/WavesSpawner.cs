@@ -13,7 +13,7 @@ namespace MillerSoft.Ghost.GameBody
         [SerializeField] 
         private PlayerController _player;
 
-        private int _amountToPool;
+        private readonly int _amountToPool = 15;
 
         private List<GameObject> _wavesInPool;
 
@@ -27,13 +27,9 @@ namespace MillerSoft.Ghost.GameBody
         private readonly float _spawnPositionX = 15f;
         private WaitForSeconds _timeBetweenReActivate;
 
-        public override void Initialize()
+        private void Awake()
         {
             _wavesInPool = new List<GameObject>();
-
-            _amountToPool = 15;
-
-            _wavesInPool.Clear();
 
             _bombPosition = new Dictionary<PositionsVariants, Vector2>()
             {
@@ -42,19 +38,30 @@ namespace MillerSoft.Ghost.GameBody
                 {PositionsVariants.bottom, new Vector2(_spawnPositionX, -3f) },
             };
 
-            GameObject oneWave;
+            _timeBetweenReActivate = new WaitForSeconds(0.8f);
+        }
 
+        public override void Initialize()
+        {
             for (int i = 0; i < _amountToPool; i++)
             {
-                oneWave = Instantiate(_wavePrefab, Vector2.zero, Quaternion.identity, transform);
+                GameObject oneWave = Instantiate(_wavePrefab, Vector2.zero, Quaternion.identity, transform);
                 SetPositionAndSpawnWave(oneWave);
                 oneWave.SetActive(false);
                 _wavesInPool.Add(oneWave);
             }
 
-            _timeBetweenReActivate = new WaitForSeconds(0.8f);
-
             StartCoroutine(SetIntervalAndActivate());
+        }
+
+        public void ClearWavesPool()
+        {
+            foreach (var wave in _wavesInPool)
+            {
+                Destroy(wave);
+            }
+
+            _wavesInPool.Clear();
         }
 
         private void SetPositionAndSpawnWave(GameObject wave)

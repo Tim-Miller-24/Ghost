@@ -12,13 +12,9 @@ namespace MillerSoft.Ghost.GameBody
 
         public int PlayerLifesCount { get; private set; }
 
-        private void OnValidate()
-        {
-            _myLifes = gameObject.GetComponent<Text>();
-        }
-
         public override void Initialize()
         {
+            _myLifes = gameObject.GetComponent<Text>();
             PlayerLifesCount = 2;
             _myLifes.text = $"{PlayerLifesCount}";
         }

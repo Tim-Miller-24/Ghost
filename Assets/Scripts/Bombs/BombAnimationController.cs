@@ -4,18 +4,13 @@ using UnityEngine;
 
 namespace MillerSoft.Ghost.GameBody
 {
-    public class BombAnimationController : InitializableBase
+    public class BombAnimationController : MonoBehaviour
     {
         private Animator _animator;
         private WaitForSeconds _timeToResetBombState;
 
         private bool _isBounced;
         private bool _isChangedColor;
-
-        public override void Initialize()
-        {
-            
-        }
 
         private void Start()
         {

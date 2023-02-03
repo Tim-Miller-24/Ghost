@@ -14,11 +14,14 @@ namespace MillerSoft.Ghost.GameBody
 
         private WaitForSeconds _timerBetweenScoreAdding;
 
+        private void Awake()
+        {
+            _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
+        }
+
         public override void Initialize()
         {
             _score = 0;
-
-            _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
 
             _player = FindObjectOfType<PlayerController>();
             _myScore = gameObject.GetComponent<Text>();
