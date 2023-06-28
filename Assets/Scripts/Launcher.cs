@@ -6,6 +6,8 @@ namespace MillerSoft.Ghost
 {
     public class Launcher : MonoBehaviour
     {
+        public static Launcher Instance;
+
         [SerializeField]
         protected InitializableBase[] initializables;
 
@@ -13,7 +15,15 @@ namespace MillerSoft.Ghost
         {
             Launch();
 
-            DontDestroyOnLoad(this);
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
+            } 
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void Launch()

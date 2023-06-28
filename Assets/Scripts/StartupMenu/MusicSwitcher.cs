@@ -20,5 +20,10 @@ namespace MillerSoft.Ghost
                 _backMusic.mute = !_backMusic.mute;
             });
         }
+
+        private void OnDestroy()
+        {
+            _musicSwitcherButton.onClick.RemoveAllListeners();
+        }
     }
 }

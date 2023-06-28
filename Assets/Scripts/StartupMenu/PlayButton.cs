@@ -21,5 +21,10 @@ namespace MillerSoft.Ghost
                 SceneManager.LoadScene(_gamePlayScene);
             });
         }
+
+        private void OnDestroy()
+        {
+            _playButton.onClick.RemoveAllListeners();
+        }
     }
 }
