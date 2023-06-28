@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class Launcher : MonoBehaviour
     {
@@ -12,6 +12,8 @@ namespace MillerSoft.Ghost.GameBody
         private void Start()
         {
             Launch();
+
+            DontDestroyOnLoad(this);
         }
 
         public void Launch()

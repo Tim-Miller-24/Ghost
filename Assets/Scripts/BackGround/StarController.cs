@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class StarController : MonoBehaviour
     {

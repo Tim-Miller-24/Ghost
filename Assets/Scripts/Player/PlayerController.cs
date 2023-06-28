@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class PlayerController : InitializableBase
     {
-        [SerializeField] 
-        private PlayerLifes _playerLifes;
-        [SerializeField]
-        private EndGamePopUp _endGamePopUp;
+        [SerializeField] private PlayerLifes _playerLifes;
+        [SerializeField] private EndGamePopUp _endGamePopUp;
 
         private Camera _camera;
         private Animator _animator;
@@ -61,7 +59,7 @@ namespace MillerSoft.Ghost.GameBody
 
         private void MovePLayer()
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if (PlayerPosition == PositionsVariants.middle)
                 {
@@ -77,7 +75,7 @@ namespace MillerSoft.Ghost.GameBody
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 if (PlayerPosition == PositionsVariants.middle)
                 {

@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class WavesSpawner : InitializableBase
     {
-        [SerializeField] 
-        private GameObject _wavePrefab;
-        [SerializeField] 
-        private GameObject _bombPrefab;
-        [SerializeField] 
-        private PlayerController _player;
+        [SerializeField] private GameObject _wavePrefab;
+        [SerializeField] private GameObject _bombPrefab;
+        [SerializeField] private PlayerController _player;
 
         private readonly int _amountToPool = 15;
 
@@ -38,7 +35,7 @@ namespace MillerSoft.Ghost.GameBody
                 {PositionsVariants.bottom, new Vector2(_spawnPositionX, -3f) },
             };
 
-            _timeBetweenReActivate = new WaitForSeconds(0.8f);
+            _timeBetweenReActivate = new WaitForSeconds(0.6f);
         }
 
         public override void Initialize()

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public abstract class InitializableBase : MonoBehaviour
     {

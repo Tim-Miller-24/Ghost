@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class PlayerLifes : InitializableBase
     {
-        [SerializeField] 
-        private Text _myLifes;
+        [SerializeField] private Text _myLifes;
 
         public int PlayerLifesCount { get; private set; }
 

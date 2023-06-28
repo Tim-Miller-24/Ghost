@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class PlayerScore : InitializableBase
     {
@@ -16,7 +16,7 @@ namespace MillerSoft.Ghost.GameBody
 
         private void Awake()
         {
-            _timerBetweenScoreAdding = new WaitForSeconds(0.8f);
+            _timerBetweenScoreAdding = new WaitForSeconds(0.6f);
         }
 
         public override void Initialize()

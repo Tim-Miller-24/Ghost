@@ -2,27 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-namespace MillerSoft.Ghost.GameBody
+namespace MillerSoft.Ghost
 {
     public class EndGamePopUp : MonoBehaviour
     {
-        private Button _restartButton;
-        private Button _quitButton;
+        [SerializeField] private Launcher _launcher;
+        [SerializeField] private WavesSpawner _wavesSpawner;
 
-        [SerializeField]
-        private Launcher _launcher;
-        [SerializeField]
-        private WavesSpawner _wavesSpawner;
+        private string _startMenuScene = "StartMenu";
+
+        private Button _restartButton;
+        private Button _contunieForAds;
+        private Button _backToMenuButton;
 
         private void Start()
         {
             _restartButton = transform.GetChild(0).GetComponent<Button>();
-            _quitButton = transform.GetChild(1).GetComponent<Button>();
+            _contunieForAds = transform.GetChild(1).GetComponent<Button>();
+            _backToMenuButton = transform.GetChild(2).GetComponent<Button>();
 
             _restartButton.onClick.AddListener(() => { RestartGame(); });
 
-            _quitButton.onClick.AddListener(() => { QuitGame(); });
+            _backToMenuButton.onClick.AddListener(() => { ComeBackToMenu(); });
         }
 
         public void RestartGame()
@@ -33,12 +36,17 @@ namespace MillerSoft.Ghost.GameBody
             gameObject.SetActive(false);
         }
 
-        private void QuitGame()
+        private void ComeBackToMenu()
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
-            Application.Quit();
+            SceneManager.LoadScene(_startMenuScene);
+            gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            _restartButton.onClick.RemoveAllListeners();
+            _contunieForAds.onClick.RemoveAllListeners();
+            _backToMenuButton.onClick.RemoveAllListeners();
         }
     }
 }
